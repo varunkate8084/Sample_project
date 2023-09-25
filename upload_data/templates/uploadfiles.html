@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<header>
+
+
+    {% include 'common.html' %}
+</header>
+<body>
+{{request.user.username}}
+{{request.user.first_name}}
+{{request.user.last_name}}
+<div class="container mt-5">
+    <div class="upfiles" id="varun">
+         <form  class="col-6 mx-auto card p-3 shadow-lg " method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+             <h3>Add Files<a name="list"><svg style="float:right" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                 <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                 </svg></a>
+             </h3><hr>
+             <div class="mb-3">
+                 <label class="form-label">File Description</label>
+                 <textarea name="file_description"  class="form-control"></textarea>
+             </div>
+             <div class="mb-3">
+                    <label class="form-label">File Upload</label>
+                    <input name="file_image" type="file" class="form-control">
+             </div>
+             <button  type="submit" class="btn btn-success">Add File</button>
+         </form>
+    </div>
+
+    <div id="shoalldata" style="margin-bottom:40px;">
+        <div class="container mt-5">
+            <div class="col-6 mx-auto card p-3 shadow-lg">
+                <h3>All Files<a id="plus" style="float:right;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                    </svg></a>
+                </h3><hr>
+                 <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">File Description</th>
+                            <th scope="col">File</th>
+                            <th scope="col">FK</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for file in files %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{file.file_description}}</td>
+                            <td><img src="/media/{{file.file_image}}" style="height:50px"></td>
+                            <td>{{file.user}}</td>
+                            <td><a href="/deletefile/{{file.id}}/" class = 'btn btn-danger'>Delete</a></td>
+                        </tr>
+                       {% endfor %}
+                    </tbody>
+                 </table>
+            </div>
+       </div>
+    </div>
+
+</div>
+</body>
+</html>
